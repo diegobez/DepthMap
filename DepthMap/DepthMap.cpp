@@ -39,77 +39,69 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////
 int main()
 {
-
-	//Loading stereo images
-
-	IplImage* img1 = cvLoadImage("resources/images/imgR.png");
-	IplImage* img2 = cvLoadImage("resources/images/imgL.png");
-
-	//Creating images with cv
-
-	IplImage *rimage = cvCreateImage(
-		cvSize(img1->width, img1->height), IPL_DEPTH_8U, 1);
-	cvCvtColor(img1, rimage, CV_RGB2GRAY);
-
-	IplImage *limage = cvCreateImage(
-		cvSize(img2->width, img2->height), IPL_DEPTH_8U, 1);
-	cvCvtColor(img2, limage, CV_RGB2GRAY);
-
-	//Showing stereo images in different windows
-
-	cvNamedWindow("Right", CV_WINDOW_AUTOSIZE);
-	cvShowImage("Right", rimage);
-
-	cvNamedWindow("Left", CV_WINDOW_AUTOSIZE);
-	cvShowImage("Left", limage);
+	
 
 
-	//Create image matrix (rows,cols,type_depth)
-	//It returns a matrix
-	//CV_8UC1 = 8bits unsigned 1 channel
-	//CV_16S = 	16bit signed
+	//-- 1. Read the images
+	Mat imgLeft = imread("resources/images/myLimage.png", IMREAD_GRAYSCALE);
+	Mat imgRight = imread("resources/images/myRimage.png", IMREAD_GRAYSCALE);
 
-	CvMat *matr = cvCreateMat(rimage->height, rimage->width, CV_8UC1);
-	CvMat *matl = cvCreateMat(limage->height, limage->width, CV_8UC1);
+	imshow("LeftImage", imgLeft);
+	imshow("RightImage", imgRight);
 
-	//The output single - channel 16 - bit signed disparity map of the same size as input images
-	CvMat* disp = cvCreateMat(rimage->height, rimage->width, CV_16S);  
-	CvMat* vdisp = cvCreateMat(rimage->height, rimage->width, CV_16S);
+	//-- And create the image in which we will save our disparities
+	Mat imgDisparity16S = Mat(imgLeft.rows, imgLeft.cols, CV_16S);
+	Mat imgDisparity8U = Mat(imgLeft.rows, imgLeft.cols, CV_8UC1);
 
-	//ansign rimage and limage to matr and mat1 (new matrix) wich are 8bits unsigned
+	if (imgLeft.empty() || imgRight.empty())
+	{
+		std::cout << " --(!) Error reading images " << std::endl; return -1;
+	}
 
-	cvConvert(rimage, matr);
-	cvConvert(limage, matl);
+	//-- 2. Call the constructor for StereoBM
 
-	//CvStereoBMState is created (where is the method cvCreateStereoBMstate?)
-
-	CvStereoBMState *BMState = cvCreateStereoBMState();
-
-	assert(BMState != 0);
-
-	//Adding features to CvStereoBMState
-
-	BMState->preFilterSize = 21;
+	/*BMState->preFilterSize = 21;
 	BMState->preFilterCap = 31;
 	BMState->SADWindowSize = 21;
 	BMState->minDisparity = 0;
 	BMState->numberOfDisparities = 128;
 	BMState->textureThreshold = 10;
-	BMState->uniquenessRatio = 15;
+	BMState->uniquenessRatio = 15;*/
 
-	//find stereo correspondence (leftImage,rightImage, ounput 17 bit signed disparity map, stereo correspondence)
-	//mat and mat1 must be 8bits unsigned and disp must be 16bit signed
-	
-	cvFindStereoCorrespondenceBM(matr, matl, disp, BMState);
+	int ndisparities = 0;   /**< Range of disparity. Must be divisible by 16.  */
+							/*The disparity range depends on the distance between
+							the two cameras and the distance between the cameras and the object of interest. 
+							Increase the DisparityRange when the cameras are far apart or the objects 
+							are close to the cameras */
 
-	//Normalize image and save it in vdisp
-	cvNormalize(disp, vdisp, 0, 255, CV_MINMAX, CV_8U);
+	int SADWindowSize = 21; /**< Size of the block window. Must be odd */
 
-	//Showing depthmap image
-	
-	cvShowImage("Dethmap", vdisp);
-	cvWaitKey(0);
+	Ptr<StereoBM> sbm = StereoBM::create(ndisparities, SADWindowSize);
+	sbm->setPreFilterCap(31);
+	sbm->setPreFilterSize(21);
+	sbm->setTextureThreshold(10);
+	sbm->setUniquenessRatio(15);
 
+	//-- 3. Calculate the disparity image
+	sbm->compute(imgLeft, imgRight, imgDisparity16S);
+
+	//-- Check its extreme values
+	double minVal; double maxVal;
+
+	minMaxLoc(imgDisparity16S, &minVal, &maxVal);
+
+	printf("Min disp: %f\n Max value: %f \n", minVal, maxVal);
+
+	//-- 4. Display it as a CV_8UC1 image
+	imgDisparity16S.convertTo(imgDisparity8U, CV_8UC1, 255 / (maxVal - minVal));
+	namedWindow("Disparity", CV_WINDOW_AUTOSIZE);
+	imshow("Disparity", imgDisparity8U);
+
+	//-- 5. Save the image
+	const std::string finalname ("NewImage");
+	imwrite("resources/images/"+finalname+".png", imgDisparity16S);
+
+	waitKey(0);
 
 	return 0;
 }
