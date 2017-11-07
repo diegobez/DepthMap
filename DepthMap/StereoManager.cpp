@@ -48,7 +48,7 @@ bool StereoManager::createBM()
 
 	bm->compute(img1, img2, disp);
 	disp.convertTo(disp8, CV_8U, 255 / (numOfDisparities*16.));
-	imwrite(path+finalname, disp8);
+	imwrite(path+finalName, disp8);
 	display();
 	
 
@@ -59,7 +59,7 @@ bool StereoManager::createSGBM()
 {
 	sgbm = StereoSGBM::create(0, numOfDisparities, 3);
 
-	/*sgbm->setP1(8 * img1.channels()*3*3);
+	sgbm->setP1(8 * img1.channels()*3*3);
 	sgbm->setP2(32 * img1.channels()*3*3);
 	sgbm->setMinDisparity(0);
 	sgbm->setNumDisparities(numOfDisparities);
@@ -73,11 +73,11 @@ bool StereoManager::createSGBM()
 	else if (alg == StereoManager::STEREO_SGBM)
 		sgbm->setMode(StereoSGBM::MODE_SGBM);
 	else if (alg == StereoManager::STEREO_3WAY)
-		sgbm->setMode(StereoSGBM::MODE_SGBM_3WAY);*/
+		sgbm->setMode(StereoSGBM::MODE_SGBM_3WAY);
 
 	sgbm->compute(img1, img2, disp);
 	disp.convertTo(disp8, CV_8U, 255 / (numOfDisparities*16.));
-	imwrite(path+finalname, disp8);
+	imwrite(path+finalName, disp8);
 	display();
 
 	return true;
@@ -93,15 +93,15 @@ void StereoManager::display()
 	imshow("disparity", disp8);
 	printf("press any key to continue...\n");
 	//fflush(stdout);
-	waitKey(0);
+	//waitKey(0);
 }
 
-StereoManager::StereoManager():img1Name(""), img2Name(""), path(""), finalname("NewImage.png"), numOfDisparities(16), SADWindowSize(3), alg(StereoManager::STEREO_SGBM)
+StereoManager::StereoManager():img1Name(""), img2Name(""), path(""), finalName("NewImage.png"), numOfDisparities(16), SADWindowSize(3), alg(StereoManager::STEREO_SGBM)
 {
 }
 
-StereoManager::StereoManager(std::string n_img1, std::string n_img2, std::string n_path, int n_numOfDisparities, int n_SADWindowSize, int n_alg)
-	: img1Name(n_img1), img2Name(n_img2), finalname("NewImage.png"),path(n_path), numOfDisparities(n_numOfDisparities), SADWindowSize(n_SADWindowSize), alg(n_alg)
+StereoManager::StereoManager(std::string n_img1, std::string n_img2, std::string n_outputName, std::string n_path, int n_numOfDisparities, int n_SADWindowSize, int n_alg)
+	: img1Name(n_img1), img2Name(n_img2), finalName(n_outputName),path(n_path), numOfDisparities(n_numOfDisparities), SADWindowSize(n_SADWindowSize), alg(n_alg)
 {
 }
 

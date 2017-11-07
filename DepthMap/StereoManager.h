@@ -18,7 +18,7 @@ private:
 
 	std::string		img1Name;
 	std::string		img2Name;
-	std::string		finalname;
+	std::string		finalName;
 	std::string		path;
 	Mat				img1;
 	Mat				img2;
@@ -38,10 +38,14 @@ private:
 	void display();
 
 public:
-	static enum { STEREO_BM = 0, STEREO_SGBM = 1, STEREO_HH = 2, STEREO_3WAY = 4 };
+	static enum { STEREO_BM = 0, STEREO_SGBM = 1, STEREO_HH = 2, STEREO_3WAY = 3 };
 	StereoManager();
-	StereoManager(std::string n_img1, std::string n_img2, std::string n_path, int n_numOfDisparities,int n_SADWindowSize,int n_alg);
+	StereoManager(std::string n_img1, std::string n_img2, std::string n_outputName, std::string n_path, int n_numOfDisparities,int n_SADWindowSize,int n_alg);
 	bool createStereoImage();
+
+	void setFinalName(std::string str) { finalName = str; }
+	void setAlgorithm(int newAlg) { alg = newAlg; }
+
 	~StereoManager();
 };
 
