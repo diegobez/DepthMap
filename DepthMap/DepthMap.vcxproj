@@ -75,8 +75,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ReferencePath>C:\Users\Enrique\Documents\GitHub\DepthMap\DepthMap;..\opencv_31\x64\vc14\lib;$(ReferencePath)</ReferencePath>
-    <IncludePath>C:\Users\Enrique\Documents\GitHub\DepthMap\DepthMap;$(IncludePath)</IncludePath>
+    <ReferencePath>..\opencv_31\x64\vc14\lib;$(ReferencePath)</ReferencePath>
+    <IncludePath>..\DepthMap;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

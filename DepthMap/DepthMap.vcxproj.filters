@@ -7,7 +7,9 @@
     <ClCompile Include="DepthMap.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="StereoManager.cpp" />
+    <ClCompile Include="StereoManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -16,7 +18,9 @@
     <ClInclude Include="targetver.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="StereoManager.h" />
+    <ClInclude Include="StereoManager.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
