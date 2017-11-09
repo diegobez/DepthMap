@@ -10,6 +10,15 @@
     <ClCompile Include="StereoManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="BaseStereo.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseStereoBM.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseStereoSGBM.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -19,6 +28,15 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="StereoManager.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStereo.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStereoBM.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStereoSGBM.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,18 +20,17 @@ using namespace std;
 int main()
 {
 	
-	StereoManager* SManager = new StereoManager("imgL.png", "imgR.png","STEREO_SGBM.png" ,"resources/images/", 128, 3, StereoManager::STEREO_SGBM);
-	SManager->createStereoImage();
+	StereoManager* SManager = new StereoManager();
 
-	SManager->setAlgorithm(StereoManager::STEREO_HH);
-	SManager->setFinalName("STEREO_HH.png");
-	SManager->createStereoImage();
-	SManager->setAlgorithm(StereoManager::STEREO_BM);
-	SManager->setFinalName("STEREO_BM.png");
-	SManager->createStereoImage();
-	SManager->setAlgorithm(StereoManager::STEREO_3WAY);
-	SManager->setFinalName("STEREO_3WAY.png");
-	SManager->createStereoImage();
+	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_BM.png", BaseStereo::STEREO_BM, "resources/images/");
+
+	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_SGBM.png", BaseStereo::STEREO_SGBM, "resources/images/");
+
+	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_3WAY.png", BaseStereo::STEREO_3WAY, "resources/images/");
+
+	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_HH.png", BaseStereo::STEREO_HH, "resources/images/" );
+
+	
 
 	////-- 1. Read the images
 	//Mat imgLeft = imread("resources/images/imgL.png", IMREAD_GRAYSCALE);
