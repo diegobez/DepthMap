@@ -22,16 +22,28 @@ int main()
 	
 	StereoManager* SManager = new StereoManager();
 
+	int64 t = getTickCount();
 	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_BM.png", BaseStereo::STEREO_BM, "resources/images/");
+	t = getTickCount() - t;
+	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 
+	t = getTickCount();
 	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_SGBM.png", BaseStereo::STEREO_SGBM, "resources/images/");
+	t = getTickCount() - t;
+	printf("STEREO_SGBM: %fms\n", t * 1000 / getTickFrequency());
 
+	t = getTickCount();
 	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_3WAY.png", BaseStereo::STEREO_3WAY, "resources/images/");
+	t = getTickCount() - t;
+	printf("STEREO_3WAY: %fms\n", t * 1000 / getTickFrequency());
 
+	t = getTickCount();
 	SManager->generateDepthMap("imgL2.png", "imgR2.png", "STEREO_HH.png", BaseStereo::STEREO_HH, "resources/images/" );
+	t = getTickCount() - t;
+	printf("STEREO_HH: %fms\n", t * 1000 / getTickFrequency());
 
 	
-
+	system("pause");
 	////-- 1. Read the images
 	//Mat imgLeft = imread("resources/images/imgL.png", IMREAD_GRAYSCALE);
 	//Mat imgRight = imread("resources/images/imgR.png", IMREAD_GRAYSCALE);
