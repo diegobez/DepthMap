@@ -4,7 +4,7 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
-#include "opencv2/core/utility.hpp"
+//#include "opencv2/core/utility.hpp"
 using namespace cv;
 
 
@@ -12,7 +12,8 @@ class BaseStereo
 {
 protected:
 	
-	void display(Mat img);
+	void display(Mat &img);
+	void cropImage(Mat &img, Mat &cropImg);
 
 public:
 	static enum { STEREO_BM = 0, STEREO_SGBM = 1, STEREO_HH = 2, STEREO_3WAY = 3 };

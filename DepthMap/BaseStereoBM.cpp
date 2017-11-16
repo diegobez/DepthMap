@@ -24,7 +24,9 @@ void BaseStereoBM::compute(std::string imgL, std::string imgR, std::string newIm
 	bm->setDisp12MaxDiff(1);
 
 	bm->compute(img1, img2, disp);
-	disp.convertTo(disp8, CV_8U, 255 / (disparity*16.));
+	Mat cropImg;
+	cropImage(disp, cropImg);
+	cropImg.convertTo(disp8, CV_8U, 255 / (disparity*16.));
 	imwrite(newImage, disp8);
 }
 

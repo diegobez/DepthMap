@@ -63,13 +63,65 @@ void BaseStereo::rectifyImagesCameraNoCalibrated(std::string imgL, std::string i
 	cv::imwrite("resources/images/rectified2.png", rectified2);//Testing image write
 }
 
-void BaseStereo::display(Mat img)
+void BaseStereo::display(Mat &img)
 {
 	namedWindow("left", CV_WINDOW_AUTOSIZE);
 	imshow("left", img);
 	printf("press any key to continue...\n");
 	fflush(stdout);
 	waitKey(0);
+}
+
+void BaseStereo::cropImage(Mat &img, Mat &cropImg)
+{
+	const int threshVal = 20;
+	const float borderThresh = 0.05f; // 5%
+	cv::Mat thresholded;
+	cv::threshold(img, thresholded, threshVal, 255, cv::THRESH_BINARY);
+	cv::morphologyEx(thresholded, thresholded, cv::MORPH_CLOSE,
+		cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3)),
+		cv::Point(-1, -1), 2, cv::BORDER_CONSTANT, cv::Scalar(0));
+
+	cv::Point tl, br;
+
+	for (int row = 0; row < thresholded.rows; row++)
+	{
+		if (cv::countNonZero(thresholded.row(row)) > borderThresh * thresholded.cols)
+		{
+			tl.y = row;
+			break;
+		}
+	}
+
+	for (int col = 0; col < thresholded.cols; col++)
+	{
+		if (cv::countNonZero(thresholded.col(col)) > borderThresh * thresholded.rows)
+		{
+			tl.x = col;
+			break;
+		}
+	}
+
+	for (int row = thresholded.rows - 1; row >= 0; row--)
+	{
+		if (cv::countNonZero(thresholded.row(row)) > borderThresh * thresholded.cols)
+		{
+			br.y = row;
+			break;
+		}
+	}
+
+	for (int col = thresholded.cols - 1; col >= 0; col--)
+	{
+		if (cv::countNonZero(thresholded.col(col)) > borderThresh * thresholded.rows)
+		{
+			br.x = col;
+			break;
+		}
+	}
+
+	cv::Rect roi(tl, br);
+	cropImg = img(roi);
 }
 
 BaseStereo::BaseStereo()
