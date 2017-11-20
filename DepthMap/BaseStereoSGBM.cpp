@@ -1,16 +1,15 @@
 #include "stdafx.h"
 #include "BaseStereoSGBM.h"
-#include <opencv2/core.hpp>
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/photo.hpp"
 #include "opencv2/calib3d.hpp"
 #include "opencv2/imgproc.hpp"
-#include "opencv2/imgproc/types_c.h"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/core/utility.hpp"
+#include "opencv2/ximgproc/disparity_filter.hpp"
+
 //#include "opencv2/ximgproc.hpp"
 
-//using namespace cv::ximgproc;
+using namespace cv::ximgproc;
 
 
 void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string newImage, int alg, int disparity, int blockSize)
@@ -25,7 +24,7 @@ void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string new
 
 	sgbm = StereoSGBM::create(0, disparity, blockSize);
 
-	//Ptr<DisparityWLSFilter> wls_filter = createDisparityWLSFilter(sgbm);;
+	Ptr<DisparityWLSFilter> wls_filter = createDisparityWLSFilter(sgbm);;
 	
 
 	sgbm->setP1(8 * img1.channels()*blockSize *blockSize);
@@ -44,38 +43,34 @@ void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string new
 	else if (alg == BaseStereo::STEREO_3WAY)
 		sgbm->setMode(StereoSGBM::MODE_SGBM_3WAY);
 
-	//Ptr<StereoMatcher> sgbm2 = createRightMatcher(sgbm);
+	Ptr<StereoMatcher> sgbm2 = createRightMatcher(sgbm);
 
 	sgbm->compute(img1, img2, disp);
-	//sgbm2->compute(img2, img1, disp2);
+	sgbm2->compute(img2, img1, disp2);
 
 	double lambda = 8000.0;
 	double sigma = 1.5;
 	double vis_mult = 1.0;
 	Mat filtered_disp;
 
-	//wls_filter->setLambda(lambda);
-	//wls_filter->setSigmaColor(sigma);
-	//wls_filter->filter(disp, img1, filtered_disp, img2);
+	wls_filter->setLambda(lambda);
+	wls_filter->setSigmaColor(sigma);
+	wls_filter->filter(disp, img1, filtered_disp, disp2);
 
-	/*Mat raw_disp_vis;
-	getDisparityVis(disp, raw_disp_vis, vis_mult);*/
+	Mat raw_disp_vis;
+	getDisparityVis(disp, raw_disp_vis, vis_mult);
 
 	Mat filtered_disp_vis;
-	//getDisparityVis(filtered_disp, filtered_disp_vis, vis_mult);
+	getDisparityVis(filtered_disp, filtered_disp_vis, vis_mult);
 
 
+	Mat cropImg = filtered_disp_vis;
 
+	//cropImage(filtered_disp_vis, cropImg);
+	double minVal; double maxVal;
+	minMaxLoc(filtered_disp_vis, &minVal, &maxVal);
 
-
-
-	//cv::ximgproc::computeBadPixelPercent(NULL,NULL,cv::Rect());
-
-	Mat cropImg = disp;
-
-	cropImage(disp, cropImg);
-
-	cropImg.convertTo(disp8, CV_8U, 255 / (disparity*16.));
+	cropImg.convertTo(disp8, CV_8U, 255 / (maxVal - minVal));
 
 	
 	imwrite(newImage, disp8);
