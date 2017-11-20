@@ -8,7 +8,6 @@
 # define _CRT_SECURE_NO_WARNINGS
 #endif
 
-//using namespace cv;
 using namespace std;
 
 
@@ -23,8 +22,8 @@ int main()
 	StereoManager* SManager = new StereoManager();
 
 	std::string myPath = "resources/images/";
-	std::string leftImg = "imgLeonL.png";
-	std::string rightImg = "imgLeonR.png";
+	std::string leftImg = "imgRealProjectL.png";
+	std::string rightImg = "imgRealProjectR.png";
 
 	//SManager->calibrateCamera(std::vector<std::string>{"chessleft2.jpg", "chessright2.jpg" }, "resources/images/");
 
@@ -48,8 +47,17 @@ int main()
 	t = getTickCount() - t;
 	printf("STEREO_HH: %fms\n", t * 1000 / getTickFrequency());
 
+	delete SManager;
 	
 	system("pause");
+
+	//*****************************************************************************
+	//Next code it is an initial implementation of disparity map with
+	//OpenCV (now works with StereoManager)
+	//*****************************************************************************
+
+
+
 	////-- 1. Read the images
 	//Mat imgLeft = imread("resources/images/imgL.png", IMREAD_GRAYSCALE);
 	//Mat imgRight = imread("resources/images/imgR.png", IMREAD_GRAYSCALE);

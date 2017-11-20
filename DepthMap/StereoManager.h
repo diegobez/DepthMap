@@ -9,13 +9,13 @@ class StereoManager
 {
 private:
 
+	//It doesnt work by now
+	bool calibrateCamera(const std::vector<std::string>& imagelist, const std::string& path = "");
 	BaseStereo*		baseStereo;
 
 public:
 	StereoManager();
-	bool generateDepthMap(std::string imgL, std::string imgR, std::string newImage, int alg = BaseStereo::STEREO_SGBM,  std::string path="", int disparity=16*4, int blockSize=21);
-
-	bool calibrateCamera(const std::vector<std::string>& imagelist, std::string path = "");
+	bool generateDepthMap(const std::string& imgL,const std::string& imgR,const std::string& newImage,const int alg = BaseStereo::STEREO_SGBM,const  std::string& path="",const int disparity=16*4,const int blockSize=21);
 
 	~StereoManager();
 };

@@ -3,7 +3,7 @@
 
 
 
-void BaseStereo::rectifyImagesCameraNoCalibrated(std::string imgL, std::string imgR)
+void BaseStereo::rectifyImagesCameraNoCalibrated(const std::string& imgL, const std::string& imgR)
 {
 
 	Mat img1 = imread(imgL, IMREAD_GRAYSCALE);
@@ -63,7 +63,7 @@ void BaseStereo::rectifyImagesCameraNoCalibrated(std::string imgL, std::string i
 	cv::imwrite("resources/images/rectified2.png", rectified2);//Testing image write
 }
 
-void BaseStereo::display(Mat &img)
+const void BaseStereo::display(const Mat &img)
 {
 	namedWindow("left", CV_WINDOW_AUTOSIZE);
 	imshow("left", img);
@@ -72,7 +72,7 @@ void BaseStereo::display(Mat &img)
 	waitKey(0);
 }
 
-void BaseStereo::cropImage(Mat &img, Mat &cropImg)
+void BaseStereo::cropImage(const Mat &img, Mat &cropImg)
 {
 	const int threshVal = 20;
 	const float borderThresh = 0.05f; // 5%

@@ -7,12 +7,10 @@
 #include "opencv2/core/utility.hpp"
 #include "opencv2/ximgproc/disparity_filter.hpp"
 
-//#include "opencv2/ximgproc.hpp"
-
 using namespace cv::ximgproc;
 
 
-void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string newImage, int alg, int disparity, int blockSize)
+void BaseStereoSGBM::compute(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const int disparity, const int blockSize)
 {
 
 	Mat img1 = imread(imgL, IMREAD_GRAYSCALE);
@@ -24,7 +22,7 @@ void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string new
 
 	sgbm = StereoSGBM::create(0, disparity, blockSize);
 
-	Ptr<DisparityWLSFilter> wls_filter = createDisparityWLSFilter(sgbm);;
+	Ptr<DisparityWLSFilter> wls_filter = createDisparityWLSFilter(sgbm);
 	
 
 	sgbm->setP1(8 * img1.channels()*blockSize *blockSize);
@@ -76,6 +74,7 @@ void BaseStereoSGBM::compute(std::string imgL, std::string imgR, std::string new
 	imwrite(newImage, disp8);
 	//display(disp8);
 
+	delete sgbm;
 }
 
 BaseStereoSGBM::BaseStereoSGBM()
@@ -85,4 +84,5 @@ BaseStereoSGBM::BaseStereoSGBM()
 
 BaseStereoSGBM::~BaseStereoSGBM()
 {
+	delete sgbm;
 }

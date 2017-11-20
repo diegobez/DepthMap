@@ -11,7 +11,7 @@ private:
 	Ptr<StereoBM> bm;
 
 public:
-	virtual void compute(std::string imgL, std::string imgR, std::string newImage, int alg, int disparity, int blockSize) override;
+	virtual void compute(const std::string& imgL,const std::string& imgR,const std::string& newImage,const int alg,const int disparity,const int blockSize) override;
 	BaseStereoBM();
 	~BaseStereoBM();
 };

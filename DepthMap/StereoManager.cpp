@@ -15,7 +15,7 @@ StereoManager::StereoManager()
 }
 
 
-bool StereoManager::generateDepthMap(std::string imgL, std::string imgR, std::string newImage, int alg, std::string path, int disparity, int blockSize)
+bool StereoManager::generateDepthMap(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const  std::string& path , const int disparity, const int blockSize)
 {
 	if (alg == BaseStereo::STEREO_BM) {
 		 baseStereo = new BaseStereoBM();
@@ -30,9 +30,8 @@ bool StereoManager::generateDepthMap(std::string imgL, std::string imgR, std::st
 	return true;
 }
 
-bool StereoManager::calibrateCamera(const std::vector<std::string>& imagelist, std::string path)
+bool StereoManager::calibrateCamera(const std::vector<std::string>& imagelist, const std::string& path)
 {
-	// ARRAY AND VECTOR STORAGE:
 
 	std::vector<std::vector<Point2f> > imagePoints;
 	std::vector<std::vector<Point3f> > objectPoints;
@@ -66,15 +65,7 @@ bool StereoManager::calibrateCamera(const std::vector<std::string>& imagelist, s
 			imagePoints.push_back(corners);
 		}
 	}
-/*
-	Mat cimg;
-	cvtColor(img, cimg, COLOR_GRAY2BGR);
-	
-	drawChessboardCorners(cimg,boardSize, corners, found);
-	double sf = 640. / MAX(img.rows, img.cols);
-	imshow("corners", cimg);
-	waitKey(0);
-	*/
+
 	float squareSize = 3;
 	for (i = 0; i < imagePoints.size(); i++)
 	{
@@ -89,4 +80,5 @@ bool StereoManager::calibrateCamera(const std::vector<std::string>& imagelist, s
 
 StereoManager::~StereoManager()
 {
+	delete baseStereo;
 }
