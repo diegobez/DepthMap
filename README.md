@@ -39,11 +39,16 @@ t = getTickCount() - t;
 	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 ```
 ## Inputs of current test
-![alt text](http://url/to/img.png)
+Stereo Images
+
+![Left Image](https://github.com/diegobez/DepthMap/blob/master/DepthMap/resources/images/imgRealProjectL.png)
+
+![Right Image](https://github.com/diegobez/DepthMap/blob/master/DepthMap/resources/images/imgRealProjectR.png)
 
 ## Output of current test
+Output Image (3Way algorithm)
 
-![alt text](http://url/to/img.png)
+![Output](https://github.com/diegobez/DepthMap/blob/master/DepthMap/resources/images/STEREO_3WAY.png)
 
 ## Contributing
 
