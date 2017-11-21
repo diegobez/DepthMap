@@ -25,19 +25,25 @@ StereoManager* SManager = new StereoManager();
 2 - Inicialize strings from path and name of image
 
 ```
-	std::string myPath = "resources/images/";
-	std::string leftImg = "imgRealProjectL.png";
-	std::string rightImg = "imgRealProjectR.png";
+std::string myPath = "resources/images/";
+std::string leftImg = "imgRealProjectL.png";
+std::string rightImg = "imgRealProjectR.png";
 ```
 
 3 - Call "generateDepthMap" with the step 2 parameters, output image name and algorithm ( bm, sgbm, 3way or hh)
 
 ```
-	int64 t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath);
-	t = getTickCount() - t;
+int64 t = getTickCount();
+SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath);
+t = getTickCount() - t;
 	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 ```
+## Inputs of current test
+![alt text](http://url/to/img.png)
+
+## Output of current test
+
+![alt text](http://url/to/img.png)
 
 ## Contributing
 
