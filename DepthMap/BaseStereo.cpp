@@ -5,7 +5,6 @@
 
 void BaseStereo::rectifyImagesCameraNoCalibrated(const std::string& imgL, const std::string& imgR)
 {
-
 	Mat img1 = imread(imgL, IMREAD_GRAYSCALE);
 	Mat img2 = imread(imgR, IMREAD_GRAYSCALE);
 
@@ -74,6 +73,8 @@ const void BaseStereo::display(const Mat &img)
 
 void BaseStereo::cropImage(const Mat &img, Mat &cropImg)
 {
+	//Deletes black borders of the image eith threshold
+
 	const int threshVal = 20;
 	const float borderThresh = 0.05f; // 5%
 	cv::Mat thresholded;
@@ -123,6 +124,29 @@ void BaseStereo::cropImage(const Mat &img, Mat &cropImg)
 	cv::Rect roi(tl, br);
 	cropImg = img(roi);
 }
+
+void BaseStereo::cropImageBySize(const Mat &img, Mat &cropImg, int width, int height)
+{
+	//Generates a sub image from img with the original size of img starting on right
+
+	Mat subImage(img, cv::Rect(img.cols-width,0,width,height));
+	cropImg = subImage;
+}
+
+void BaseStereo::addLeftBorder(Mat & img, int percent)
+{
+	//Make a border with a percert of source image on the left
+	//The border on the left is filled with right source image (Wrap)
+	
+
+	Mat img_large;
+	int pix =(int) img.cols * percent / 100;
+	copyMakeBorder(img, img_large, 0, 0, pix, 0, BORDER_WRAP, Scalar::all(0));
+	img = img_large;
+
+}
+
+
 
 BaseStereo::BaseStereo()
 {

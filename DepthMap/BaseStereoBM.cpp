@@ -9,11 +9,22 @@
 
 using namespace cv::ximgproc;
 
-void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const int disparity, const int blockSize)
+void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const bool is360, const int disparity, const int blockSize)
 {
+	//Reading imgs and iniciaze variables
 
 	Mat img1 = imread(imgL, IMREAD_GRAYSCALE);
 	Mat img2 = imread(imgR, IMREAD_GRAYSCALE);
+	int fwidth = img1.cols;
+	int fheight = img1.rows;
+
+	//Only if image is 360 righborder is added to the left
+	if (is360) {
+		addLeftBorder(img1, 5);
+		addLeftBorder(img2, 5);
+	}
+	
+	//Open cv bm is created and computed
 	Mat disp = Mat(img1.rows, img1.cols, CV_16S);
 	Mat disp2 = Mat(img1.rows, img1.cols, CV_16S);
 	Mat disp8 = Mat(img1.rows, img1.cols, CV_8UC1);
@@ -39,6 +50,8 @@ void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, con
 	bm->compute(img1, img2, disp);
 	bm2->compute(img2, img1, disp2);
 
+	//Use of the filter on the image created
+
 	double lambda = 8000.0;
 	double sigma = 1.5;
 	double vis_mult = 1.0;
@@ -54,14 +67,20 @@ void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, con
 	Mat filtered_disp_vis;
 	getDisparityVis(filtered_disp, filtered_disp_vis, vis_mult);
 
+	//Creating final output
 
-	Mat cropImg = filtered_disp_vis;
 	double minVal; double maxVal;
 	minMaxLoc(filtered_disp_vis, &minVal, &maxVal);
+	filtered_disp_vis.convertTo(disp8, CV_8U, 255 / (maxVal - minVal));
 
-	//cropImage(disp, cropImg);
-	cropImg.convertTo(disp8, CV_8U, 255 / (maxVal - minVal));
-	imwrite(newImage, disp8);
+	//If img is 360 is croped by original size from right
+
+	Mat cropImg = disp8;
+	if (is360) {
+		cropImageBySize(disp8, cropImg, fwidth, fheight);
+	}
+
+	imwrite(newImage, cropImg);
 
 	delete bm;
 }

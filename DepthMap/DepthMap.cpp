@@ -19,31 +19,40 @@ using namespace std;
 int main()
 {
 	
+	//inicialize stereomanager
 	StereoManager* SManager = new StereoManager();
 
-	std::string myPath = "resources/images/";
-	std::string leftImg = "imgRealProjectL.png";
-	std::string rightImg = "imgRealProjectR.png";
+	//inicialize name of images, path and if img is 320
 
+	std::string myPath	 = "resources/images/";
+	std::string leftImg	 = "imgRealProjectL.png";
+	std::string rightImg = "imgRealProjectR.png";
+	//std::string leftImg = "imgLeonL.png";
+	//std::string rightImg = "imgLeonR.png";
+	bool isImg360		 = true;
+
+	//Not works yet
 	//SManager->calibrateCamera(std::vector<std::string>{"chessleft2.jpg", "chessright2.jpg" }, "resources/images/");
 
+	//Generating depth map with img360 and tick count for each algorithm
+
 	int64 t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath);
+	SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath, isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg , "STEREO_SGBM.png", BaseStereo::STEREO_SGBM, "resources/images/");
+	SManager->generateDepthMap(leftImg, rightImg , "STEREO_SGBM.png", BaseStereo::STEREO_SGBM, "resources/images/", isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_SGBM: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_3WAY.png", BaseStereo::STEREO_3WAY, "resources/images/");
+	SManager->generateDepthMap(leftImg, rightImg, "STEREO_3WAY.png", BaseStereo::STEREO_3WAY, "resources/images/", isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_3WAY: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_HH.png", BaseStereo::STEREO_HH, "resources/images/" );
+	SManager->generateDepthMap(leftImg, rightImg, "STEREO_HH.png", BaseStereo::STEREO_HH, "resources/images/", isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_HH: %fms\n", t * 1000 / getTickFrequency());
 
