@@ -28,13 +28,14 @@ StereoManager* SManager = new StereoManager();
 std::string myPath = "resources/images/";
 std::string leftImg = "imgRealProjectL.png";
 std::string rightImg = "imgRealProjectR.png";
+bool isImg360		 = true;
 ```
 
 3 - Call "generateDepthMap" with the step 2 parameters, output image name and algorithm ( bm, sgbm, 3way or hh)
 
 ```
 int64 t = getTickCount();
-SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath);
+SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath, isImg360);
 t = getTickCount() - t;
 	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 ```

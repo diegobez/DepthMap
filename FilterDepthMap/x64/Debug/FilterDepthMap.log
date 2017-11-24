@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+  FilterDepthMap.cpp
+  dllmain.cpp
+  StereoManager.cpp
+  BaseStereoSGBM.cpp
+  BaseStereoBM.cpp
+  BaseStereo.cpp
+  Generating Code...
+     Creating library C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Debug\FilterDepthMapd.lib and object C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Debug\FilterDepthMapd.exp
+  FilterDepthMap.vcxproj -> C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Debug\FilterDepthMapd.dll
