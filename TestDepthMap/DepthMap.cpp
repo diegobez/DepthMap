@@ -24,7 +24,7 @@ int main()
 
 	//inicialize name of images, path and if img is 320
 
-	std::string myPath	 = "resources/images/";
+	std::string myPath	 = "../resources/images/";
 	std::string leftImg	 = "imgRealProjectL.png";
 	std::string rightImg = "imgRealProjectR.png";
 	//std::string leftImg = "imgLeonL.png";

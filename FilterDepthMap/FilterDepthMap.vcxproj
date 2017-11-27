@@ -75,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../include;../DepthMap;$(IncludePath)</IncludePath>
+    <IncludePath>../include;../TestDepthMap;$(IncludePath)</IncludePath>
     <TargetName>FilterDepthMapd</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -83,7 +83,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../include;../DepthMap;$(IncludePath)</IncludePath>
+    <IncludePath>../include;../TestDepthMap;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,10 +159,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\DepthMap\BaseStereo.cpp" />
-    <ClCompile Include="..\DepthMap\BaseStereoBM.cpp" />
-    <ClCompile Include="..\DepthMap\BaseStereoSGBM.cpp" />
-    <ClCompile Include="..\DepthMap\StereoManager.cpp" />
+    <ClCompile Include="..\TestDepthMap\BaseStereo.cpp" />
+    <ClCompile Include="..\TestDepthMap\BaseStereoBM.cpp" />
+    <ClCompile Include="..\TestDepthMap\BaseStereoSGBM.cpp" />
+    <ClCompile Include="..\TestDepthMap\StereoManager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="FilterDepthMap.cpp" />
     <ClCompile Include="stdafx.cpp">

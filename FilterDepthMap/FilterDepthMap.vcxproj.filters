@@ -47,16 +47,16 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DepthMap\BaseStereo.cpp">
+    <ClCompile Include="..\TestDepthMap\BaseStereo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DepthMap\BaseStereoBM.cpp">
+    <ClCompile Include="..\TestDepthMap\BaseStereoBM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DepthMap\BaseStereoSGBM.cpp">
+    <ClCompile Include="..\TestDepthMap\BaseStereoSGBM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DepthMap\StereoManager.cpp">
+    <ClCompile Include="..\TestDepthMap\StereoManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
