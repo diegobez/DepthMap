@@ -9,12 +9,13 @@
 
 using namespace cv::ximgproc;
 
-void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const bool is360, const int disparity, const int blockSize)
+void BaseStereoBM::compute(const Mat& imgL, const Mat& imgR, Mat& newImage, const int alg, const bool is360, const int disparity, const int blockSize)
 {
 	//Reading imgs and iniciaze variables
-
-	Mat img1 = imread(imgL, IMREAD_GRAYSCALE);
-	Mat img2 = imread(imgR, IMREAD_GRAYSCALE);
+	Mat img1 = imgL;
+	Mat img2 = imgR;
+	//cv::cvtColor(imgL, img1, CV_BGR2GRAY);
+	//cv::cvtColor(imgL, img2, CV_BGR2GRAY);
 	int fwidth = img1.cols;
 	int fheight = img1.rows;
 
@@ -80,7 +81,7 @@ void BaseStereoBM::compute(const std::string& imgL, const std::string& imgR, con
 		cropImageBySize(disp8, cropImg, fwidth, fheight);
 	}
 
-	imwrite(newImage, cropImg);
+	newImage = cropImg;
 
 	delete bm;
 }

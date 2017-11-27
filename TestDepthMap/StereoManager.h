@@ -19,7 +19,7 @@ public:
 
 
 	StereoManager();
-	bool generateDepthMap(const std::string& imgL,const std::string& imgR,const std::string& newImage,const int alg = BaseStereo::STEREO_SGBM,const  std::string& path="",const bool is360=false,const int disparity=16*4,const int blockSize=21);
+	bool generateDepthMap(const Mat& imgL,const Mat& imgR,Mat& newImage,const int alg = BaseStereo::STEREO_SGBM,const bool is360=false,const int disparity=16*4,const int blockSize=21);
 
 	~StereoManager();
 };

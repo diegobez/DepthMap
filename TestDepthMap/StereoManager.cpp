@@ -16,7 +16,7 @@ StereoManager::StereoManager()
 }
 
 
-bool StereoManager::generateDepthMap(const std::string& imgL, const std::string& imgR, const std::string& newImage, const int alg, const  std::string& path ,const bool is360, const int disparity, const int blockSize)
+bool StereoManager::generateDepthMap(const Mat& imgL, const Mat& imgR, Mat& newImage, const int alg,const bool is360, const int disparity, const int blockSize)
 {
 	//Depending on algorthim creates a child variable (basestereobm or basestereosgbm) and generate depth map with it
 
@@ -28,7 +28,7 @@ bool StereoManager::generateDepthMap(const std::string& imgL, const std::string&
 	}
 	//baseStereo->rectifyImagesCameraNoCalibrated(path + imgL, path + imgR);
 
-	baseStereo->compute(path+imgL, path+imgR, path+newImage, alg,is360, disparity, blockSize);
+	baseStereo->compute(imgL, imgR, newImage, alg,is360, disparity, blockSize);
 
 	return true;
 }

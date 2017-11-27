@@ -1,6 +1,4 @@
-﻿  StereoManager.cpp
-  BaseStereoSGBM.cpp
+﻿  BaseStereoSGBM.cpp
   BaseStereoBM.cpp
-  BaseStereo.cpp
   Generating Code...
   FilterDepthMap.vcxproj -> C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Debug\FilterDepthMapd.dll

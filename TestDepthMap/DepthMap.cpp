@@ -24,12 +24,25 @@ int main()
 
 	//inicialize name of images, path and if img is 320
 
-	std::string myPath	 = "../resources/images/";
+	std::string myPath	 = "resources/images/";
 	std::string leftImg	 = "imgRealProjectL.png";
 	std::string rightImg = "imgRealProjectR.png";
 	//std::string leftImg = "imgLeonL.png";
 	//std::string rightImg = "imgLeonR.png";
 	bool isImg360		 = true;
+
+
+
+
+	Mat Limg = imread(myPath+leftImg, IMREAD_GRAYSCALE);
+	Mat Rimg = imread(myPath+rightImg, IMREAD_GRAYSCALE);
+	Mat OutBM, OutSGBM, Out3W, OutHH;
+
+	if (!Limg.data || !Rimg.data)                              // Check for invalid input
+	{
+		cout << "Could not open or find the image" << std::endl;
+		return -1;
+	}
 
 	//Not works yet
 	//SManager->calibrateCamera(std::vector<std::string>{"chessleft2.jpg", "chessright2.jpg" }, "resources/images/");
@@ -37,24 +50,29 @@ int main()
 	//Generating depth map with img360 and tick count for each algorithm
 
 	int64 t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_BM.png", BaseStereo::STEREO_BM, myPath, isImg360);
+	SManager->generateDepthMap(Limg, Rimg, OutBM, BaseStereo::STEREO_BM, isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_BM: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg , "STEREO_SGBM.png", BaseStereo::STEREO_SGBM, "resources/images/", isImg360);
+	SManager->generateDepthMap(Limg, Rimg, OutSGBM, BaseStereo::STEREO_SGBM, isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_SGBM: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_3WAY.png", BaseStereo::STEREO_3WAY, "resources/images/", isImg360);
+	SManager->generateDepthMap(Limg, Rimg, Out3W, BaseStereo::STEREO_3WAY, isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_3WAY: %fms\n", t * 1000 / getTickFrequency());
 
 	t = getTickCount();
-	SManager->generateDepthMap(leftImg, rightImg, "STEREO_HH.png", BaseStereo::STEREO_HH, "resources/images/", isImg360);
+	SManager->generateDepthMap(Limg, Rimg, OutHH, BaseStereo::STEREO_HH, isImg360);
 	t = getTickCount() - t;
 	printf("STEREO_HH: %fms\n", t * 1000 / getTickFrequency());
+
+	imwrite(myPath + "STEREO_BM.png", OutBM);
+	imwrite(myPath + "STEREO_SGBM.png", OutSGBM);
+	imwrite(myPath + "STEREO_3WAY.png", Out3W);
+	imwrite(myPath + "STEREO_HH.png",OutHH);
 
 	delete SManager;
 	

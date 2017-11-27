@@ -1,11 +1,12 @@
-﻿  BaseStereo.cpp
-  BaseStereoBM.cpp
-  BaseStereoSGBM.cpp
-  StereoManager.cpp
+﻿  FilterDepthMap.cpp
+FilterDepthMap.cpp(109): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type '::size_t'
+  FilterDepthMap.cpp(109): note: consider using '%zd' in the format string
+FilterDepthMap.cpp(110): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type '::size_t'
+  FilterDepthMap.cpp(110): note: consider using '%zd' in the format string
      Creating library C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.lib and object C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.exp
   Generating code
-  0 of 14 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  33 of 109 functions (30.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   FilterDepthMap.vcxproj -> C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.dll

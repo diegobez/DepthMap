@@ -24,16 +24,16 @@
     <ClInclude Include="frei0r\frei0r.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DepthMap\BaseStereo.h">
+    <ClInclude Include="..\TestDepthMap\BaseStereo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DepthMap\BaseStereoBM.h">
+    <ClInclude Include="..\TestDepthMap\BaseStereoBM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DepthMap\BaseStereoSGBM.h">
+    <ClInclude Include="..\TestDepthMap\BaseStereoSGBM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DepthMap\StereoManager.h">
+    <ClInclude Include="..\TestDepthMap\StereoManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

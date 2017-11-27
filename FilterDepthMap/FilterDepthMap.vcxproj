@@ -150,10 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\DepthMap\BaseStereo.h" />
-    <ClInclude Include="..\DepthMap\BaseStereoBM.h" />
-    <ClInclude Include="..\DepthMap\BaseStereoSGBM.h" />
-    <ClInclude Include="..\DepthMap\StereoManager.h" />
+    <ClInclude Include="..\TestDepthMap\BaseStereo.h" />
+    <ClInclude Include="..\TestDepthMap\BaseStereoBM.h" />
+    <ClInclude Include="..\TestDepthMap\BaseStereoSGBM.h" />
+    <ClInclude Include="..\TestDepthMap\StereoManager.h" />
     <ClInclude Include="frei0r\frei0r.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

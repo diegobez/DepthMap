@@ -3,6 +3,10 @@ c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\vc141.pdb
 c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\stdafx.obj
 c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\filterdepthmap.obj
 c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\dllmain.obj
+c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\stereomanager.obj
+c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\basestereosgbm.obj
+c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\basestereobm.obj
+c:\users\enrique\documents\github\depthmap\filterdepthmap\x64\release\basestereo.obj
 c:\users\enrique\documents\github\depthmap\x64\release\filterdepthmap.lib
 c:\users\enrique\documents\github\depthmap\x64\release\filterdepthmap.exp
 c:\users\enrique\documents\github\depthmap\x64\release\filterdepthmap.ipdb
