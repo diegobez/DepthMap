@@ -12,7 +12,6 @@ class BaseStereo
 {
 private:
 	//It doesnt work
-	void rectifyImagesCameraNoCalibrated(const std::string& imgL, const std::string& imgR);
 
 protected:
 	
@@ -20,6 +19,7 @@ protected:
 	void cropImage(const Mat &img, Mat &cropImg);
 	void cropImageBySize(const Mat &img, Mat &cropImg,int width,int height);
 	void addLeftBorder(Mat& img, int percent);
+	void depthMapFiltering(const const Ptr<StereoMatcher> stereoMatcher, const Mat& LeftImg, const Mat& disparityMapLeft, const Mat& disparityMapRight, Mat& filteredDisparity);
 
 public:
 	static enum { STEREO_BM = 0, STEREO_SGBM = 1, STEREO_HH = 2, STEREO_3WAY = 3 } algorithm;

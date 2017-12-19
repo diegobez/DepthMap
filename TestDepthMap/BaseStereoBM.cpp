@@ -11,77 +11,87 @@ using namespace cv::ximgproc;
 
 void BaseStereoBM::compute(const Mat& imgL, const Mat& imgR, Mat& newImage, const int alg, const bool is360, const int disparity, const int blockSize)
 {
-	//Reading imgs and iniciaze variables
+	//Generates a depthMap with bm class of OpenCV
+
+	//1-Reading imgs and iniciaze variables
+
 	Mat img1 = imgL;
 	Mat img2 = imgR;
-	//cv::cvtColor(imgL, img1, CV_BGR2GRAY);
-	//cv::cvtColor(imgL, img2, CV_BGR2GRAY);
 	int fwidth = img1.cols;
 	int fheight = img1.rows;
 
-	//Only if image is 360 righborder is added to the left
+	//2-Only if image is 360 righborder is added to the left
 	if (is360) {
 		addLeftBorder(img1, 5);
 		addLeftBorder(img2, 5);
 	}
-	
-	//Open cv bm is created and computed
-	Mat disp = Mat(img1.rows, img1.cols, CV_16S);
-	Mat disp2 = Mat(img1.rows, img1.cols, CV_16S);
+
+	Mat disp = Mat(img1.rows, img1.cols, CV_8UC1);
+	Mat disp2 = Mat(img1.rows, img1.cols, CV_8UC1);
 	Mat disp8 = Mat(img1.rows, img1.cols, CV_8UC1);
+
+	//3-Setting up Opencv BM
+
+	//All information of parameters got from this urls
+	//Docs OpenCV sgbm: https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html?highlight=stereobm#stereosgbm
+	//Docs OpenCV Disparity map post-filtering (see github link on this page) : https://docs.opencv.org/3.1.0/d3/d14/tutorial_ximgproc_disparity_filtering.html
+
+	//Parameters:
+
+	//minDisparity:		Minimum possible disparity value. 
+	//					Normally, it is zero
+
+	//numDisparities:	Maximum disparity minus minimum disparity. 
+	//					Must be divisible by 16.
+
+	//SADWindowSize:	Matched block size. 
+	//					It must be an odd number >=1 .
+	//					Normally, it should be somewhere in the 3..11 range.
 
 	bm = StereoBM::create(disparity, blockSize);
 
-	Ptr<DisparityWLSFilter> wls_filter = createDisparityWLSFilter(bm);
+	//uniquenessRatio:	Margin in percentage by which the best(minimum) computed cost function value should “win” 
+	//					the second best value to consider the found match correct.
+	//					Normally, a value within the 5 - 15 range is good enough.
 
-	//bm->setROI1(roi1);
-	//bm->setROI2(roi2);
-	bm->setPreFilterCap(31);
-	bm->setMinDisparity(0);
-	//bm->setNumDisparities(numOfDisparities);
-	bm->setTextureThreshold(10);
-	bm->setUniquenessRatio(15);
-	bm->setSpeckleWindowSize(100);
-	bm->setSpeckleRange(32);
+	bm->setUniquenessRatio(10);
+
+	//speckleWindowSize:	Maximum size of smooth disparity regions to consider their noise speckles and invalidate. 
+	//						0 to disable speckle filtering. Otherwise, in the 50-200 range.
+	bm->setSpeckleWindowSize(200);
+
+	//speckleRange:		Maximum disparity variation within each connected component. 
+	//					Positive value, it will be implicitly multiplied by 16.
+	//					Normally, 1 or 2 is good enough.
+
+	bm->setSpeckleRange(2);
+
+	//disp12MaxDiff: Maximum allowed difference (in integer pixel units) in the left-right disparity check
+
 	bm->setDisp12MaxDiff(1);
 
-	Ptr<StereoMatcher> bm2 = createRightMatcher(bm);
+	//4-Creating right macher for good post-filtering
 
+	Ptr<StereoMatcher> bmRightMatcher = createRightMatcher(bm);
+
+	//5-Generating disparityMaps from left and right matchers
 
 	bm->compute(img1, img2, disp);
-	bm2->compute(img2, img1, disp2);
+	bmRightMatcher->compute(img2, img1, disp2);
 
-	//Use of the filter on the image created
+	//6-Making postfiltering
 
-	double lambda = 8000.0;
-	double sigma = 1.5;
-	double vis_mult = 1.0;
-	Mat filtered_disp;
+	depthMapFiltering(bm, img1, disp, disp2, disp8);
 
-	wls_filter->setLambda(lambda);
-	wls_filter->setSigmaColor(sigma);
-	wls_filter->filter(disp, img1, filtered_disp, disp2);
-
-	Mat raw_disp_vis;
-	getDisparityVis(disp, raw_disp_vis, vis_mult);
-
-	Mat filtered_disp_vis;
-	getDisparityVis(filtered_disp, filtered_disp_vis, vis_mult);
-
-	//Creating final output
-
-	double minVal; double maxVal;
-	minMaxLoc(filtered_disp_vis, &minVal, &maxVal);
-	filtered_disp_vis.convertTo(disp8, CV_8U, 255 / (maxVal - minVal));
-
-	//If img is 360 is croped by original size from right
+	//7-If img is 360 is croped by original size from right
 
 	Mat cropImg = disp8;
+
 	if (is360) {
 		cropImageBySize(disp8, cropImg, fwidth, fheight);
 	}
-
 	newImage = cropImg;
+
 
 	delete bm;
 }

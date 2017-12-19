@@ -26,7 +26,6 @@ bool StereoManager::generateDepthMap(const Mat& imgL, const Mat& imgR, Mat& newI
 	else {
 		baseStereo = new BaseStereoSGBM();
 	}
-	//baseStereo->rectifyImagesCameraNoCalibrated(path + imgL, path + imgR);
 
 	baseStereo->compute(imgL, imgR, newImage, alg,is360, disparity, blockSize);
 

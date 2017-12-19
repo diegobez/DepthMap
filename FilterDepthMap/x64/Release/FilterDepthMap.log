@@ -1,12 +1,11 @@
-﻿  stdafx.cpp
-  BaseStereo.cpp
-  BaseStereoBM.cpp
+﻿  BaseStereo.cpp
+c:\users\enrique\documents\github\depthmap\testdepthmap\BaseStereo.h(22): warning C4114: same type qualifier used more than once
   BaseStereoSGBM.cpp
-  StereoManager.cpp
-  dllmain.cpp
-  FilterDepthMap.cpp
+c:\users\enrique\documents\github\depthmap\testdepthmap\BaseStereo.h(22): warning C4114: same type qualifier used more than once
      Creating library C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.lib and object C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.exp
   Generating code
-  All 80 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  8 of 79 functions (10.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   FilterDepthMap.vcxproj -> C:\Users\Enrique\Documents\GitHub\DepthMap\x64\Release\FilterDepthMap.dll
