@@ -37,7 +37,11 @@ int main()
 
 	Mat Limg = imread(myPath+leftImg, IMREAD_GRAYSCALE);
 	Mat Rimg = imread(myPath+rightImg, IMREAD_GRAYSCALE);
+	Mat LimgFlip, RimgFlip;
+	cv::flip(Limg, LimgFlip, 1);
+	cv::flip(Rimg, RimgFlip, 1);
 	Mat OutBM, OutSGBM, Out3W, OutHH;
+	Mat Out3WF, Out3W2;
 
 	if (!Limg.data || !Rimg.data)                              // Check for invalid input
 	{
@@ -59,6 +63,11 @@ int main()
 
 	t = getTickCount();
 	SManager->generateDepthMap(Limg, Rimg, Out3W, BaseStereo::STEREO_3WAY, isImg360);
+	SManager->generateDepthMap(RimgFlip, LimgFlip, Out3WF, BaseStereo::STEREO_3WAY, isImg360);
+	cv::flip(Out3WF, Out3W2, 1);
+	
+
+
 	t = getTickCount() - t;
 	printf("STEREO_3WAY: %fms\n", t * 1000 / getTickFrequency());
 
@@ -69,7 +78,8 @@ int main()
 
 	imwrite(myPath + "STEREO_BM.png", OutBM);
 	imwrite(myPath + "STEREO_SGBM.png", OutSGBM);
-	imwrite(myPath + "STEREO_3WAY.png", Out3W);
+	imwrite(myPath + "STEREO_3WAYL.png", Out3W);
+	imwrite(myPath + "STEREO_3WAYRwFlip.png", Out3W2);
 	imwrite(myPath + "STEREO_HH.png",OutHH);
 
 	delete SManager;
